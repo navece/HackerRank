@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+vector<vector<int> > rotate(vector<vector<int> >& arr, int r, int m, int n){
+    int temp1, temp2, temp3, temp4;
+    int l1=0;
+    int z = min(m, n)/2;
+    int ro, x;
+    int M=m, N=n;
+    x = (M*2+N*2-4);
+    while(z!=0){
+        ro=r%(x);
+    for(int i=0;i<ro;i++){
+        temp1 = arr[l1][l1+1];
+        temp2 = arr[m-2][l1];
+        temp3 = arr[m-1][n-2];
+        temp4 = arr[l1+1][n-1];
+        for(int j=l1+1;j<n-1;j++){
+            arr[l1][j]=arr[l1][j+1];
+        }
+        for(int j=m-2;j>l1;j--){
+            arr[j][l1]=arr[j-1][l1];
+        }
+        for(int j=n-2;j>l1;j--){
+            arr[m-1][j]=arr[m-1][j-1];
+        }
+        for(int j=l1+1;j<m-1;j++){
+            arr[j][n-1]=arr[j+1][n-1];
+        }
+        arr[l1][l1] = temp1;
+        arr[m-1][l1] = temp2;
+        arr[m-1][n-1] = temp3;
+        arr[l1][n-1] = temp4;
+    }
+    z--;
+    m--;
+    n--;
+    l1++;
+    M-=2;
+    N-=2;
+    cout << M << "  " << N << endl;
+    x = (M)*2+(N)*2-4;
+    }
+    return arr;
+}
+
+
+int main(){
+    vector<vector<int> > arr;
+    vector<int> temp;
+    int r;
+    int x, m=4, n=4;
+    int count=0;
+    cin >> m;
+    cin >> n;
+    cin >> r;
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cin >> x;
+            //count++;
+            temp.push_back(x);
+        }
+        arr.push_back(temp);
+        temp.clear();
+    }
+    rotate(arr, r, m, n);
+    cout << endl << endl;
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
