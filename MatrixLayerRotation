@@ -40,7 +40,6 @@ vector<vector<int> > rotate(vector<vector<int> >& arr, int r, int m, int n){
     l1++;
     M-=2;
     N-=2;
-    cout << M << "  " << N << endl;
     x = (M)*2+(N)*2-4;
     }
     return arr;
@@ -59,14 +58,12 @@ int main(){
     for(int i=0;i<m;i++){
         for(int j=0;j<n;j++){
             cin >> x;
-            //count++;
             temp.push_back(x);
         }
         arr.push_back(temp);
         temp.clear();
     }
     rotate(arr, r, m, n);
-    cout << endl << endl;
     for(int i=0;i<m;i++){
         for(int j=0;j<n;j++){
             cout << arr[i][j] << " ";
