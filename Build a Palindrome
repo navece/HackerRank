@@ -1,0 +1,119 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+ string maxi(string s1, string s2){
+     int flag=0;
+     if(s1==s2)
+        return s1;
+     if(s1.length()>s2.length())
+     return s1;
+     else if(s2.length()>s1.length())
+     return s2;
+     else{
+         for(int i=0;i<s1.length();i++){
+             if(s1[i]<s2[i]){
+                 flag=1;
+                 break;
+             }
+             if(s2[i]<s1[i]){
+                 break;
+             }
+         }
+         if(flag==1)
+         return s1;
+         else
+         return s2;
+     }
+ }
+
+ string palin(string s){
+    int i=0, j=s.length()-1;
+    string ans;
+    while(i<=j){
+        if(s[i]==s[j]){
+            int shuru=i, khatam=j;
+            int flag=0;
+            string ans1, ans2;
+            while(shuru<khatam){
+                if(s[shuru]!=s[khatam]){
+                    flag=1;
+                    break;
+                }
+                ans1=ans1+s[shuru];
+                ans2=s[khatam]+ans2;
+                shuru++;
+                khatam--;
+            }
+            if(shuru==khatam)
+                ans1+=s[shuru];
+            if(flag==0){
+                ans=ans1+ans2;
+                break;
+            }
+        }
+        j--;
+    }
+    return ans;
+}
+
+
+string buildPalindrome(string a, string b) {
+    string s;
+    reverse(b.begin(), b.end());
+    int m=a.length(), n=b.length();
+    vector<vector<string> > dp;
+    dp.reserve(10000);
+    for(int i=0;i<=m;i++){
+        vector<string> tempo;
+        tempo.reserve(10000);
+        for(int j=0;j<=n;j++){
+            tempo.push_back("");
+        }
+        dp.push_back(tempo);
+    }
+    for(int i=1;i<=m;i++){
+        for(int j=1;j<=n;j++){
+            if(a[i-1]==b[j-1])
+            dp[i][j]=dp[i-1][j-1]+a[i-1];
+            else
+            dp[i][j]="";
+        }
+    }
+    for(int i=0;i<=m;i++){
+        for(int j=0;j<=n;j++){
+            if(dp[i][j].length()!=0){
+                string temp=dp[i][j];
+                reverse(temp.begin(), temp.end());
+ s = maxi(s, dp[i][j] + maxi(palin(a.substr(i)), palin(b.substr(j))) + temp);
+            }
+        }
+    }
+    if(s=="")
+    return "-1";
+    return s;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int t;
+    cin >> t;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        string a;
+        getline(cin, a);
+
+        string b;
+        getline(cin, b);
+
+        string result = buildPalindrome(a, b);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
+}
